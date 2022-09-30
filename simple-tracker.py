@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import hashlib
 from tinydb import TinyDB, Query 
 import time
-import datetime as dt
+from datetime import datetime as dt
 import uuid
 from notifications import send_email
 
@@ -20,9 +20,7 @@ def get_product(url):
     }
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, "html.parser")
-    product_title = soup.find(id='productTitle').text.replace('\n','')
-    medium = soup.findAll("span","a-size-medium a-color-price")
-    base = soup.findAll("span","a-size-base a-color-price")
+    product_title = soup.find(id='productTitle').text.replace('\n','').strip()
     try:
         price_str = soup.findAll("span","a-size-medium a-color-price")[0].text
     except Exception:
@@ -39,29 +37,27 @@ def get_product(url):
     return {'product_price':price, 'product_title':product_title, 'previous_price':price,'id':id, 'currency':currency, 'url':url}
 
 
-def check_amazon():
+def track_prices_from_amzn():
     while True:
         user_db = TinyDB('json/product.json')
         user_product = user_db.all()
         search = Query()
-        for a in user_product:
+        for prd in user_product:
             while True:
                 status = True
                 try:
-                    result = get_product(a['url'])
+                    result = get_product(prd['url'])
                 except Exception:
                     status = False
                     pass
                 if status:
                     break
-            current_price = float(a['product_price'])
-            print(current_price)
+            current_price = float(prd['product_price'])
             new_price = float(result['product_price'])
             if current_price - new_price > 0:
                 price_drop = current_price - new_price
-                print(price_drop)
-                user_db.update({'product_price':str(new_price), 'previous_price':str(current_price)}, search.id == a['id'])
-                send = user_db.search(search.id == a['id'])
+                user_db.update({'product_price':str(new_price), 'previous_price':str(current_price)}, search.id == prd['id'])
+                send = user_db.search(search.id == prd['id'])
                 
                 send_data = [{
                     "Product Title": send[0]['product_title'],
