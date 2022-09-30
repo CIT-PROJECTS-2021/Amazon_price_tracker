@@ -1,6 +1,9 @@
+import os
+import smtplib
+from email.message import EmailMessage
+import time 
+from dotenv import load_dotenv
 load_dotenv()
-env_path = Path('.')/'.env'
-load_dotenv(dotenv_path=env_path)
 
 # retrieving keys and adding them to the project
 # from the .env file through their key names
