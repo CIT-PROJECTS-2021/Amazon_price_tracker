@@ -2,6 +2,7 @@ import smtplib
 from email.message import EmailMessage
 import time 
 
+
 EMAIL_ADDRESS = 'carlperez491@gmail.com' # email of the sender
 PASSWORD = 'nfttwqekspouvnnp' # password of the sender
 def send_mail(user_email, current_price):
@@ -9,7 +10,7 @@ def send_mail(user_email, current_price):
     msg['Subject'] = 'Price Alert'
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = user_email
-    msg.set_content(f"The price of the commodity is Ugx. {current_price}")
+    msg.set_content(f"The price of the commodity is USD. {current_price}")
     
     while True:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:

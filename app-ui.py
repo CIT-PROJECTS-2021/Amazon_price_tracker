@@ -16,10 +16,10 @@ dummy_data = {
 
 
 class MainWindow(QMainWindow):
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
 
-        self.setWindowTitle('Youtube Transcripts Converter')
+        self.setWindowTitle('Amazon Price Tracker')
         self.setGeometry(200, 100, 1000, 600)
         center_widget = QWidget(self)
         center_widget_layout = QVBoxLayout()
@@ -35,18 +35,20 @@ class MainWindow(QMainWindow):
         layout = QHBoxLayout()
 
         # Input Label
-        layout.addWidget(QLabel("Enter Item Here: "))
+        layout.addWidget(QLabel("Enter Item_url Here: "))
 
         # Form Input
         form_input = QLineEdit()
-        form_input.setFixedWidth(300)
+        form_input.setFixedWidth(400)
         layout.addWidget(form_input)
 
-        # button
+        # button click and add to table
         button = QPushButton("Track")
         layout.addWidget(button)
+        button.clicked.connect(self._add_to_table)
 
         search_widget.setLayout(layout)
+        
 
         def add_to_tracking():
             item = form_input.text()
