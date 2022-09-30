@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
-from simple_tracker import track_prices_from_amzn , get_product
-import threading 
+from simple_tracker import get_product
 from tinydb import TinyDB, Query
 
 
@@ -75,5 +74,4 @@ def remove():
         user_product.remove(product_search.email == data['data'])
         return "Email Deleted."
 
-threading.Thread(target=track_prices_from_amzn).start()
 app.run(host='0.0.0.0',debug=False, port=10086)
