@@ -19,7 +19,7 @@ class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
 
-        self.setWindowTitle('Youtube Transcripts Converter')
+        self.setWindowTitle('Amazon Price Tracker')
         self.setGeometry(200, 100, 1000, 600)
         center_widget = QWidget(self)
         center_widget_layout = QVBoxLayout()
