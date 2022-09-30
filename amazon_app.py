@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from simple-tracker import track_prices_from_amzn , get_product
+from simple_tracker import track_prices_from_amzn , get_product
 import threading 
 from tinydb import TinyDB, Query
 
