@@ -24,3 +24,4 @@ def send_mail(user_email, current_price):
 
             smtp.send_message(msg)
         time.sleep(5*60*60) # notification will be sent every after five hours
+        return send_mail(user_email, current_price)
