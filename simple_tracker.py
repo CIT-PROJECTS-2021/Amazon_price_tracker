@@ -5,7 +5,7 @@ from tinydb import TinyDB, Query
 import time
 from datetime import datetime as dt
 import uuid
-# from notifications import send_email
+from notifications import send_email
 
 
 
@@ -65,8 +65,15 @@ def track_prices_from_amzn():
                     "URL":send[0]['url'],
                     'id':str(uuid.uuid1())
                 }]
-            # send the data to the email
-            send_email(send_data)
+                
+            notification_list = TinyDB("json/notification.json")
+            notification_list.insert(send_data[0])
+
+            email_list = TinyDB("json/email.json")
+            email_user = email_list.all()
+            for i in email_user:
+                send_email(i['email'], send_data)
+            time.sleep(60*60*24)    
                 
 
         now = dt.now()

@@ -11,6 +11,11 @@ app = Flask("Amazon Price Tracker")
 def index():
     return render_template("index.html")
 
+#  rooute for email 
+@app.route("/email" , methods=["GET"])
+def email():
+    return render_template("email.html")
+
 # route to search 
 @app.route('/search', methods=['GET'])
 def search():
